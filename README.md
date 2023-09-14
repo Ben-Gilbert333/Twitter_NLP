@@ -3,7 +3,9 @@
 ## **Authors**:
 Bobby Daly, DS; Ben Gilbert, DS
 
-![image](https://github.com/Ben-Gilbert333/Twitter_NLP/assets/126971652/2744d4f2-ed49-426e-802e-4dcc8f05f335)
+![image](https://github.com/Ben-Gilbert333/Twitter_NLP/assets/126971652/2744d4f2-ed49-426e-802e-4dcc8f05f335)                           ![image](https://github.com/Ben-Gilbert333/Twitter_NLP/assets/126971652/52bdc3d7-82fe-4880-85b3-3e7a797f5415)
+
+
 
 ## **Overview**
 For this project we analyzed over 8,000 tweets from the 2011 SXSW festival. The dataframe used consisted of the text in the tweet, the sentiment of the tweet (rated by a human), and the product/brand the tweet was directed towards. Before modeling we performed a preprocessing approach that included:
