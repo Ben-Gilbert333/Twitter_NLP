@@ -15,17 +15,17 @@ For this project we analyzed over 8,000 tweets from the 2011 SXSW festival. The 
 * tokenizing
 * stemming
   
-Then we began to build models that aimed to predict the sentiment associated with each tweet. Our final model is 68% accurate. This is 8% more accurate than our dummy model. Throughout this process we reached the conclusion that designing products more similar to Apple's will receive better reactions from the public. Next steps include creating a binary model, using our model to analyze tweets after the 2024 SXSW event, and improving data collection.
+Then we began to build models that aimed to predict the sentiment associated with each tweet. Our final model is 67% accurate. This is 7% more accurate than our dummy model. Throughout this process we reached the conclusion that designing products more similar to Apple's will receive better reactions from the public. Next steps include creating a binary model, using our model to analyze tweets after the 2024 SXSW event, and improving data collection.
 
 
 ## **Business Problem**
-We are Orange, a tech company, looking to improve our next product release at SXSW 2024. This festival is a great opportunity for major tech companies like Google, Apple and now Orange, to reveal new products and obtain a good public image. By analyzing tweets from a previous SXSW event and the sentiment associated with each tweet we attempt to build a model that can predict the sentiment given text from a tweet. This will help us in the future understand how our new products are being recepted by the public.
+We are Orange, a tech company, looking to improve our next product release at SXSW 2024. This festival is a great opportunity for major tech companies like Google, Apple and now Orange, to reveal new products and obtain a good public image. By analyzing tweets from a previous SXSW event and the sentiment associated with each tweet we attempt to build a model that can predict the sentiment when given text from a tweet. This will help us in the future understand how our new products are being recepted by the public.
 
 For this project we chose accuracy as the metric to focus on. We decided that positive, negative, and neutral tweets all add value to determining how to handle product design in the future based on sentiment towards previous products. Given this train of thought we didn't find it necessary to optimize any class over the other and thought accuracy score would be best to use in order to evaluate our models.
 
 ## **Data Understanding**
 ![image](https://github.com/Ben-Gilbert333/Twitter_NLP/assets/126971652/1f99767d-f808-4f18-aed4-5600a1cfc0d8) <br>
-The data comes from CrowdFlower via [data.world](https://data.world/crowdflower/brands-and-product-emotions). It consists of 9,000 tweets about Apple and Google products from a South by Southwest (SXSW) event. Human raters rated the sentiment of the tweets as positive, negative, neutral, or indistinguishable. There are 3 columns including the tweet, the product the tweet is about, and the sentiment of the tweet. The variable we used as the target is sentiment. Our goal is to find key words in tweets that can be used to identify the sentiment of each tweet.
+The data comes from CrowdFlower via [data.world](https://data.world/crowdflower/brands-and-product-emotions). It consists of over 8,000 tweets about Apple and Google products from the 2011 South by Southwest (SXSW) event. Human raters rated the sentiment of the tweets as positive, negative, neutral, or indistinguishable. There are 3 columns including the tweet, the product the tweet is about, and the sentiment of the tweet. The variable we used as the target is sentiment. Our goal is to find key words in tweets that can be used to identify the sentiment of each tweet.
 
 ## **Data Preparation**
 The steps we took to prepare our data before NLP processing included:
@@ -36,8 +36,8 @@ The steps we took to prepare our data before NLP processing included:
 
 The NLP steps performed included:
 * standardizing
-* tokenizing
 * removing stopwords
+* tokenizing
 * stemming
 
 Created three bar charts that display the top 10 most common tokens in each sentiment group (positive, negative, and neutral). These charts are how we decided which tokens needed to be added to our stopwords list. If a token was prevelant in all sentiment groups we added it to our stopwords list because these tokens do not add any value in determining sentiment. This process was repeated until we felt the top tokens were diverse and meaningful.
@@ -60,7 +60,7 @@ Every iteration of our models was highly focused on reducing overfitting while m
 The most dominant sentiment in the data is neutral, therefore we set our baseline accuracy as a model predicting neutral sentiment every time. This would result in an accuracy score of approximately 60%.
 
 #### **First Model (Decision Tree)**
-We created a decision tree model with all default parameters. Our goal here was to purposefully create an overfit model in order to confirm it achieves a high accuracy score. Accomplishing this tells us we are using good enough data in order to predict our target variable. This worked successfully, this model received an accuracy score of 95.17% on the training data. But, the cross_val_score is much lower (64%) showing this model is very overfit. This is still performing a little better than the baseline model.
+We created a decision tree model with all default parameters. Our goal here was to purposefully create an overfit model in order to confirm it achieves a high accuracy score. Accomplishing this tells us we are using good enough data in order to predict our target variable. This worked successfully, this model received an accuracy score of 95.17% on the training data. But, the cross_val_score is much lower (65%) showing this model is very overfit. This is still performing a little better than the baseline model.
 
 #### **Second Model (Random Forest)**
 We then created a Random Forest model with default parameters and added max_features=2000 to the vectorizer in order to help reduce overfitting. Again, this random forest model earned a high accuracy score (95%) on the training data but it is most likely due to overfitting. The cross validation score (67%) is a bit higher than it was for the decision tree model. This random forest model is still very overfit to the training data.
@@ -69,7 +69,7 @@ We then created a Random Forest model with default parameters and added max_feat
 In order to combat the overfit results we used a GridSearch to help tune the hyperparameters. The GridSearch discovered max_depth=75, max_features=1000, and n_estimators=18 had the best cross validation score. This is almost the same score as before but should be much less overfit considering the hyperparameters. After two rounds of paramter tweaking the GridSearch converged on a cross validation score of 68%, 1% higher than our Random Forest without a GridSearch!
 
 #### **Third Model (Logistic Regression)**
-We then created a logistic regression model with an awareness that logistic regression does not handle class imbalances as well as decision trees/random forests. We used max_features=900 in the vectorizer because it worked the best from the GridSearch with the random forest model. This logistic regression has an 75% accuracy score which is pretty high but it a cross validation score of 67% shows that it is overfit, but not as bad as the base random tree or base random forest models. We then created confusion matrix in order to investigate how the model is handling the class imbalance. It shows that this model is struggling predicting the negative and positive sentiments accurately but is doing pretty well with the neutral sentiment becuase most of the data is neutral. <br>
+We then created a logistic regression model with an awareness that logistic regression does not handle class imbalances as well as decision trees/random forests. We used max_features=900 in the vectorizer because it worked the best from the GridSearch with the random forest model. This logistic regression has a 75% accuracy score which is pretty high but it a cross validation score of 67% shows that it is overfit, but not as bad as the base random tree or base random forest models. We then created confusion matrix in order to investigate how the model is handling the class imbalance. It shows that this model is struggling predicting the negative and positive sentiments accurately but is doing pretty well with the neutral sentiment becuase most of the data is neutral. <br>
 <img width="362" alt="Screenshot 2023-09-14 at 4 18 07 PM" src="https://github.com/Ben-Gilbert333/Twitter_NLP/assets/126971652/17dfaf8b-17e3-4fe9-bc06-b861bd995f87"> <br>
 
 #### **Logistic Regression with GridSearch**
@@ -79,7 +79,7 @@ In order to combat the poor performance due to overfitting and the class imbalan
 Created a Multinomial Naive Bayes (MNB) model. Kept the max_features=900 in the vectorizer to reduce overfitting again. This was a lower accuracy score (71%) on the training data than on previous models that sparked hope it was not overfit. A cross validation score of 67% showed us that this model was a little less overfit than the previous models, but still was overfit on the training data.
 
 #### **Logistic Regression with GridSearch**
-We tried to improve the MNB model by adjusting hyperparameters using a GridSearch. This did not improve much from the accuracy score using the defualt parameters, but it did improve cross validation by about 0.5%.
+We tried to improve the MNB model by adjusting hyperparameters using a GridSearch. This did not improve much from the accuracy score using the defualt parameters, but it did improve cross validation by about 0.4%.
 
 #### **Final Model (Stacking Random Forest, Logistic Regression, and MNB Models)**
 Finally, we made an improved model by stacking our best iterations of the previous models. Doing this resulted in an accuracy score of 81% on the training data and a cross validation score of 68.35%. We spent a lot of time changing the hyperparameters on this StackedClassifier model. Nothing improved the cross validation score. We tried changing the final_estimator, max_features in the vectorizer, and much more.
@@ -111,7 +111,7 @@ Sincerely, <br>
 Bobby Daly, Ben Gilbert <br>
 
 ## Further Details
-Further details are available in the full analysis presented in the [Jupyter Notebook](https://github.com/Ben-Gilbert333/Twitter_NLP/blob/main/Twitter_NLP_Analysis.ipynb). 
+Further details are available in the full analysis presented in the [Jupyter Notebook](https://github.com/Ben-Gilbert333/Twitter_NLP/blob/main/Twitter_NLP_Analysis.ipynb) and the presentation slides can be found [here](https://github.com/Ben-Gilbert333/Twitter_NLP/blob/main/Twitter%20NLP%20Analysis%20Presentation.pdf). 
 
 ## Repository Structure
 ```
