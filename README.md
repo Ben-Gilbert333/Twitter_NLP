@@ -116,7 +116,7 @@ Further details are available in the full analysis presented in the [Jupyter Not
 ## Repository Structure
 ```
 ├── data
-├── notebooks
+├── scratch_notebooks
 ├── README.md
 ├── LICENSE
 ├── .gitignore
